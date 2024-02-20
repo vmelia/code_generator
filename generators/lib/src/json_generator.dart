@@ -15,10 +15,10 @@ class JsonGenerator extends GeneratorForAnnotation<Entity> {
 
     final visitor = ModelVisitor();
     element.visitChildren(visitor);
-
     final buffer = StringBuffer();
-    buffer.writeln('class $className {');
 
+    // Class
+    buffer.writeln('class $className {');
     visitor.fields.forEach((key, value) {
       buffer.writeln('final $value $key;');
     });
@@ -37,36 +37,30 @@ class JsonGenerator extends GeneratorForAnnotation<Entity> {
     visitor.fields.forEach((key, value) {
       buffer.writeln('$value? $key,');
     });
-
-    buffer.writeln('}) {');
-    buffer.writeln('return $className(');
+    buffer.writeln('}) =>');
+    buffer.writeln('$className(');
     visitor.fields.forEach((key, value) {
       buffer.writeln("$key: $key ?? this.$key,");
     });
     buffer.writeln(');');
-    buffer.writeln('}');
 
     // TO MAP
     buffer.writeln();
-    buffer.writeln('Map<String, dynamic> toMap() {');
-    buffer.writeln('return {');
+    buffer.writeln('Map<String, dynamic> toMap() => {');
     visitor.fields.forEach((key, value) {
       buffer.writeln("'$key': $key,");
     });
     buffer.writeln('};');
-    buffer.writeln('}');
 
     // FROM MAP
     buffer.writeln();
-    buffer.writeln('factory $className.fromMap(Map<String, dynamic> map) {');
-    buffer.writeln('return $className(');
+    buffer.writeln('factory $className.fromMap(Map<String, dynamic> map) => $className(');
     visitor.fields.forEach((key, value) {
       buffer.writeln("$key: map['$key'],");
     });
     buffer.writeln(');');
-    buffer.writeln('}');
-    buffer.writeln('}');
 
+    buffer.writeln('}');
     return buffer.toString();
   }
 }
