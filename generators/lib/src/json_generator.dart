@@ -18,37 +18,31 @@ class JsonGenerator extends GeneratorForAnnotation<Entity> {
 
     final buffer = StringBuffer();
     buffer.writeln('class $className {');
-    for (int i = 0; i < visitor.fields.length; i++) {
-      buffer.writeln(
-        'final ${visitor.fields.values.elementAt(i)} ${visitor.fields.keys.elementAt(i)};',
-      );
-    }
+
+    visitor.fields.forEach((key, value) {
+      buffer.writeln('final $value $key;');
+    });
 
     // Constructor
     buffer.writeln();
     buffer.writeln('const $className({');
-    for (int i = 0; i < visitor.fields.length; i++) {
-      buffer.writeln(
-        'required this.${visitor.fields.keys.elementAt(i)},',
-      );
-    }
+    visitor.fields.forEach((key, value) {
+      buffer.writeln('required this.$key,');
+    });
     buffer.writeln('});');
 
     // copyWith
     buffer.writeln();
     buffer.writeln('$className copyWith({');
-    for (int i = 0; i < visitor.fields.length; i++) {
-      buffer.writeln(
-        '${visitor.fields.values.elementAt(i)}? ${visitor.fields.keys.elementAt(i)},',
-      );
-    }
+    visitor.fields.forEach((key, value) {
+      buffer.writeln('$value? $key,');
+    });
+
     buffer.writeln('}) {');
     buffer.writeln('return $className(');
-    for (int i = 0; i < visitor.fields.length; i++) {
-      buffer.writeln(
-        "${visitor.fields.keys.elementAt(i)}: ${visitor.fields.keys.elementAt(i)} ?? this.${visitor.fields.keys.elementAt(i)},",
-      );
-    }
+    visitor.fields.forEach((key, value) {
+      buffer.writeln("$key: $key ?? this.$key,");
+    });
     buffer.writeln(');');
     buffer.writeln('}');
 
@@ -56,11 +50,9 @@ class JsonGenerator extends GeneratorForAnnotation<Entity> {
     buffer.writeln();
     buffer.writeln('Map<String, dynamic> toMap() {');
     buffer.writeln('return {');
-    for (int i = 0; i < visitor.fields.length; i++) {
-      buffer.writeln(
-        "'${visitor.fields.keys.elementAt(i)}': ${visitor.fields.keys.elementAt(i)},",
-      );
-    }
+    visitor.fields.forEach((key, value) {
+      buffer.writeln("'$key': $key,");
+    });
     buffer.writeln('};');
     buffer.writeln('}');
 
@@ -68,11 +60,9 @@ class JsonGenerator extends GeneratorForAnnotation<Entity> {
     buffer.writeln();
     buffer.writeln('factory $className.fromMap(Map<String, dynamic> map) {');
     buffer.writeln('return $className(');
-    for (int i = 0; i < visitor.fields.length; i++) {
-      buffer.writeln(
-        "${visitor.fields.keys.elementAt(i)}: map['${visitor.fields.keys.elementAt(i)}'],",
-      );
-    }
+    visitor.fields.forEach((key, value) {
+      buffer.writeln("$key: map['$key'],");
+    });
     buffer.writeln(');');
     buffer.writeln('}');
     buffer.writeln('}');
