@@ -1,3 +1,3 @@
 library annotations;
 
-export 'src/json_generator.dart';
+export 'src/entity_definition.dart';

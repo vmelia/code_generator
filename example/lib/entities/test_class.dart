@@ -2,7 +2,7 @@ import 'package:annotations/annotations.dart';
 
 part 'test_class.g.dart';
 
-@Entity('TestClass')
+@EntityDefinition('TestClass')
 class TestClassDefinition {
   late String stringValue;
   late bool boolValue;

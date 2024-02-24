@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:generators/src/dynamic_extensions.dart';
+import 'package:generators/extensions.dart';
 
 class ModelVisitor extends SimpleElementVisitor<void> {
   String className = '';

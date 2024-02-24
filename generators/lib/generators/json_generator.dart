@@ -1,10 +1,11 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:annotations/annotations.dart';
 import 'package:build/build.dart';
-import 'package:generators/src/model_visitor.dart';
 import 'package:source_gen/source_gen.dart';
 
-class JsonGenerator extends GeneratorForAnnotation<Entity> {
+import '../model_visitor.dart';
+
+class JsonGenerator extends GeneratorForAnnotation<EntityDefinition> {
   @override
   String generateForAnnotatedElement(
     Element element,
