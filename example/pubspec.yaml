@@ -8,8 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  annotations:
-    path: ../annotations/
+  generators:
+    path: ../generators/
 
   cupertino_icons:
 
@@ -17,8 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
-  generators:
-    path: ../generators/
+
 
   flutter_lints:
 

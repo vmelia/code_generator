@@ -1,4 +1,4 @@
-import 'package:annotations/annotations.dart';
+import 'package:generators/annotations.dart';
 
 part 'test_class.g.dart';
 
