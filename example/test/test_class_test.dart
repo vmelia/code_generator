@@ -1,4 +1,4 @@
-import 'package:example/test_class.dart';
+import 'package:example/entities.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -40,7 +40,7 @@ void main() {
     });
 
     group('copyWith', () {
-      test('no values', () {
+      test('no new values', () {
         final newTestClass = testClass.copyWith();
 
         expect(newTestClass.stringValue, expectedClass.stringValue);
@@ -50,7 +50,7 @@ void main() {
         expect(newTestClass.dateTimeValue, expectedClass.dateTimeValue);
       });
 
-      test('new values', () {
+      test('all new values', () {
         final newTestClass = testClass.copyWith(
           stringValue: newClass.stringValue,
           boolValue: newClass.boolValue,
