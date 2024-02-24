@@ -7,9 +7,9 @@ targets:
 builders:
   generators:
     target: ":generators"
-    import: "package:generators/generators.dart"
-    builder_factories: ["generateJsonClass"] #Builder name(BuilderOptions)
-    build_extensions: { ".dart": [".g.dart", ".json_generator.g.part"] }
+    import: "package:generators/generators_library.dart"
+    builder_factories: ["generateEntityClass"] #Builder name(BuilderOptions)
+    build_extensions: { ".dart": [".g.dart", ".entity_generator.g.part"] }
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]

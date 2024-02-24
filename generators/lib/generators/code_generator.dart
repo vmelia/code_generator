@@ -1,38 +1,34 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:build/build.dart';
-import 'package:generators/annotations.dart';
-import 'package:source_gen/source_gen.dart';
 
-import '../model_visitor.dart';
+import '../generators.dart';
 
-class JsonGenerator extends GeneratorForAnnotation<EntityDefinition> {
+class CodeGenerator {
+  CodeGenerator({
+    required this.className,
+    required this.visitor,
+  });
+
+  final String className;
+  final ModelVisitor visitor;
+  final buffer = StringBuffer();
+
   @override
-  String generateForAnnotatedElement(
-    Element element,
-    ConstantReader annotation,
-    BuildStep buildStep,
-  ) {
-    final className = annotation.read('className').literalValue as String;
+  String toString() => buffer.toString();
 
-    final visitor = ModelVisitor();
-    element.visitChildren(visitor);
-    final buffer = StringBuffer();
-
-    // Class
+  void generateClassHeader() {
     buffer.writeln('class $className {');
-    visitor.fields.forEach((key, value) {
-      buffer.writeln('final $value $key;');
-    });
+    visitor.fields.forEach((key, value) => buffer.writeln('final $value $key;'));
+  }
 
-    // Constructor
+  void generateConstructor() {
     buffer.writeln();
     buffer.writeln('const $className({');
     visitor.fields.forEach((key, value) {
       buffer.writeln('required this.$key,');
     });
     buffer.writeln('});');
+  }
 
-    // copyWith
+  void generateCopyWith() {
     buffer.writeln();
     buffer.writeln('$className copyWith({');
     visitor.fields.forEach((key, value) {
@@ -44,24 +40,27 @@ class JsonGenerator extends GeneratorForAnnotation<EntityDefinition> {
       buffer.writeln("$key: $key ?? this.$key,");
     });
     buffer.writeln(');');
+  }
 
-    // TO MAP
+  void generateToMap() {
     buffer.writeln();
     buffer.writeln('Map<String, dynamic> toMap() => {');
     visitor.fields.forEach((key, value) {
       buffer.writeln("'$key': $key,");
     });
     buffer.writeln('};');
+  }
 
-    // FROM MAP
+  void generateFromMap() {
     buffer.writeln();
     buffer.writeln('factory $className.fromMap(Map<String, dynamic> map) => $className(');
     visitor.fields.forEach((key, value) {
       buffer.writeln("$key: map['$key'],");
     });
     buffer.writeln(');');
+  }
 
+  void generateClassFooter() {
     buffer.writeln('}');
-    return buffer.toString();
   }
 }
